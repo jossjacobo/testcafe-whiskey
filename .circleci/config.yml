@@ -52,3 +52,12 @@ workflows:
       - find_wishlist_whiskeys:
           requires:
             - build
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 8 * * 2,3,4"
+    jobs:
+      - build
+      - find_wishlist_whiskeys:
+          requires:
+            - build
