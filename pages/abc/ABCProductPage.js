@@ -34,7 +34,7 @@ export default class ABCProductPage extends ABCBasePage {
           results: await this.getInventoryForStore(store)
         });
       } catch (error) {
-        console.log(`Could not find store ${store.id}, skipping...`);
+        console.log(`Could not find ${expectedWhiskey} on store ${store.id}, skipping...`);
       }
     }
 
