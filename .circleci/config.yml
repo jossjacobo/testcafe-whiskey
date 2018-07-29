@@ -50,17 +50,3 @@ workflows:
     jobs:
       - build
       - find_wishlist_whiskeys
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 8 * * 2,3,4"
-    jobs:
-      - build
-      - find_on_the_hunt_whiskeys
-  weekly_wishlist:
-    triggers:
-      - schedule:
-          cron: "0 8 * * 3"
-    jobs:
-      - build
-      - find_on_the_hunt_whiskeys
