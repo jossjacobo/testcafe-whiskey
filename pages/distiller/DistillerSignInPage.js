@@ -10,8 +10,8 @@ export default class DistillerSignInPage {
 
   async signIn() {
     await t
-      .typeText(this.usernameField, "jossjacobo@gmail.com")
-      .typeText(this.passwordField, "963dG7he*II@o0%2")
+      .typeText(this.usernameField, `${process.env.DISTILLER_EMAIL}`)
+      .typeText(this.passwordField, `${process.env.DISTILLER_PASSWORD}`)
       .click(this.submitButton);
     return new DistillerHomePage();
   }
