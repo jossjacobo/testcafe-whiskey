@@ -52,10 +52,14 @@ workflows:
       - find_wishlist_whiskeys:
           requires:
             - build
-  weekly:
+  weekly_on_the_hunt:
     triggers:
       - schedule:
           cron: "0 8 * * 2,3,4"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build
       - find_wishlist_whiskeys:
