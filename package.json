@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe chrome main.test.js"
+    "test": "testcafe chrome main.test.js",
+    "test:ci": "testcafe chrome:headless **/* -r xunit:/tmp/test-results/res.xml"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "testcafe": "^0.20.5"
+    "testcafe": "^0.20.5",
+    "testcafe-reporter-xunit": "^2.1.0"
   }
 }
