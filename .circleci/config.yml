@@ -48,5 +48,6 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
-      - find_wishlist_whiskeys
+      - find_wishlist_whiskeys:
+        requires:
+          - build
