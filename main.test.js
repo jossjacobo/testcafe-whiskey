@@ -1,6 +1,12 @@
 import env from 'dotenv';
 env.config();
 
+import slackNotify from 'slack-notify';
+let slack;
+if (process.env.SLACK_WEBHOOK_URL) {
+  slack = slackNotify(process.env.SLACK_WEBHOOK_URL);
+}
+
 import DistillerHomePage from './pages/distiller/DistillerHomePage';
 import ABCHomePage from './pages/abc/ABCHomePage';
 import ABCSearchResultsPage from './pages/abc/ABCSearchResultsPage';
@@ -18,7 +24,16 @@ test('Sign In to distiller and print wishlist', async t => {
     .then(myListsPage => myListsPage.navigateToList())
     .then(wishList => wishList.getWhiskeyNames())
     .catch(err => console.log(err));
+
   console.log(whiskeyList);
+  if (process.env.SLACK_WEBHOOK_URL) {
+    slack.send({
+      icon_url: 'https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2018-07-29/408349589526_501be22227b357239684_72.jpg',
+      unfurl_links: 1,
+      username: 'Whiskey Bot',
+      text: `Searching Whiskey Distiller List '${process.env.DISTILLER_LIST}': \n \`\`\`${JSON.stringify(whiskeyList, null, 2)}\`\`\``
+    });
+  }
 
   if (whiskeyList.length > 0) {
     await t.navigateTo('https://www.abc.virginia.gov/');
@@ -43,14 +58,31 @@ test('Sign In to distiller and print wishlist', async t => {
           searched: whiskey.searchedWhiskey,
           found: whiskey.foundWhiskey,
           inventory: store.results.inventoryCount,
-          phone: store.results.phone,
-          address: store.storeInfo.address
+          phone: store.results.phone
+          // address: store.storeInfo.address // TODO clean up address field
         });
       }
       return sorted;
     }, {});
-    console.log(util.inspect(resultsSortedByStores, false, null))
+
+    console.log(util.inspect(resultsSortedByStores, false, null));
+    if (process.env.SLACK_WEBHOOK_URL) {
+      slack.send({
+        icon_url: 'https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2018-07-29/408349589526_501be22227b357239684_72.jpg',
+        unfurl_links: 1,
+        username: 'Whiskey Bot',
+        text: `Search results:\n\`\`\`${JSON.stringify(resultsSortedByStores, null, 2)}\`\`\``
+      });
+    }
   } else {
     console.log('No whisk(e)ys found on your list');
+    if (process.env.SLACK_WEBHOOK_URL) {
+      slack.send({
+        icon_url: 'https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2018-07-29/408349589526_501be22227b357239684_72.jpg',
+        unfurl_links: 1,
+        username: 'Whiskey Bot',
+        text: 'No whiskeys found on your list'
+      });
+    }
   }
 });

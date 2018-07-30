@@ -58,7 +58,6 @@ export default class ABCProductPage extends ABCBasePage {
     };
   }
 
-  // Currently doesn't support "Select a size" if it's not already set  (e.g. Blantons)
   async getInventoryForStore(store) {
     let inventoryCount = 0;
     let phone;
