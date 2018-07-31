@@ -54,8 +54,9 @@ test('Sign In to distiller and print wishlist', async t => {
       // Reduce the results array to sort them by store and not by whiskey
       const resultsSortedByStores = results.reduce((sorted, whiskey) => {
         for (const store of whiskey.results) {
-          sorted[`${store.storeInfo.storeId}`] = [];
-          sorted[store.storeInfo.storeId].push({
+          const storeIndex = `Store #${store.storeInfo.storeId}: ${store.storeInfo.address}`;
+          sorted[storeIndex] = [];
+          sorted[storeIndex].push({
             searched: whiskey.searchedWhiskey,
             found: whiskey.foundWhiskey,
             inventory: store.results.inventoryCount,

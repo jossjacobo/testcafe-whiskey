@@ -4,7 +4,7 @@ class Store {
   constructor(id) {
     this.id = `${id}`;
     this.firstResultMakeThisMyStoreButton = Selector(`#store-search-modal-make-this-my-store-${id}`)
-    this.addressSelector = Selector(`#store-search-modal-store-${id} address`);
+    this.addressSelector = Selector('#my-store .address');
     this.phoneSelector = Selector(`#store-search-modal-store-${id} .phone`);
   }
 }
@@ -24,10 +24,10 @@ export default class ABCBasePage {
       .typeText(this.selectStoreSearchBar, store.id, { replace: true })
       .click(this.selectStoreSubmitButton);
 
-    let address = await store.addressSelector.textContent;
     let phone = await store.phoneSelector.textContent;
-
     await t.click(store.firstResultMakeThisMyStoreButton);
+    let address = await store.addressSelector.textContent;
+
     return {
       storeId: store.id,
       address: address.trim(),
