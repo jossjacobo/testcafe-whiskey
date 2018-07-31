@@ -6,7 +6,7 @@ export default class ABCProductPage extends ABCBasePage {
     super();
     this.name = Selector('.abc-title-bar h1');
     this.image = Selector('.abc-product-card .img-container img');
-    this.price = Selector('.pricing .price');
+    this.price = Selector('.product-pricing .price');
     this.product = Selector('.pricing .ng-binding');
     this.description = Selector('.abc-product-card .description-text');
     this.moreStores = Selector('.abc-product-card .more-stores');
@@ -60,16 +60,22 @@ export default class ABCProductPage extends ABCBasePage {
 
   async getInventoryForStore(store) {
     let inventoryCount = 0;
-    let phone;
+    let phone, price;
     let inventoryExist = await this.existsAsync(this.inventory);
     if (inventoryExist) {
-      inventoryCount = await this.inventory().textContent;
-      phone = await this.phone().textContent;
+      try {
+        inventoryCount = await this.inventory().textContent;
+        phone = await this.phone().textContent;
+        price = await this.price().textContent;
+      } catch (error) {
+        console.log(error);
+      }
     }
     return {
       storeId: store.id,
       inventoryCount,
-      phone
+      phone,
+      price
     };
   }
 

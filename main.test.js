@@ -59,7 +59,8 @@ test('Sign In to distiller and print wishlist', async t => {
             searched: whiskey.searchedWhiskey,
             found: whiskey.foundWhiskey,
             inventory: store.results.inventoryCount,
-            phone: store.results.phone
+            phone: store.results.phone,
+            price: store.results.price
             // address: store.storeInfo.address // TODO clean up address field
           });
         }
