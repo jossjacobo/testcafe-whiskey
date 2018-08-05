@@ -65,7 +65,15 @@ export default class ABCProductPage extends ABCBasePage {
     if (inventoryExist) {
       try {
         inventoryCount = await this.inventory().textContent;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
         phone = await this.phone().textContent;
+      } catch (error) {
+        console.log(error);
+      }
+      try {
         price = await this.price().textContent;
       } catch (error) {
         console.log(error);

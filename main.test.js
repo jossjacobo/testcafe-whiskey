@@ -37,12 +37,15 @@ test('Sign In to distiller and print wishlist', async t => {
     }
 
     if (whiskeyList.length > 0) {
-      await t.navigateTo('https://www.abc.virginia.gov/');
       let results = [];
       for (const whiskey of whiskeyList) {
+        await new ABCHomePage().navigateHome();
         await new ABCHomePage().search(whiskey);
+
         const resultsPage = new ABCSearchResultsPage();
-        if (resultsPage.hasResults()) {
+        const hasResults = await resultsPage.hasResults();
+        console.log({ hasResults });
+        if (hasResults) {
           await resultsPage.clickOnFirstResult()
             .then(productPage => productPage.selectSizeIfAvailable())
             .then(productPage => productPage.searchAllStoresInventory(whiskey))
