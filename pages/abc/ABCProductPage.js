@@ -17,9 +17,13 @@ export default class ABCProductPage extends ABCBasePage {
   }
 
   async selectSizeIfAvailable() {
-    const sizeOptionsCount = await this.productSizeOptions.count;
-    await t.click(this.productSize)
-      .click(this.productSizeOptions.nth(sizeOptionsCount - 1));
+    try {
+      const sizeOptionsCount = await this.productSizeOptions.count;
+      await t.click(this.productSize)
+        .click(this.productSizeOptions.nth(sizeOptionsCount - 1));
+    } catch (error) {
+      console.log(error);
+    }
     return this;
   }
 
