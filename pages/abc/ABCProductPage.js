@@ -35,7 +35,7 @@ export default class ABCProductPage extends ABCBasePage {
         const storeInfo = await this.selectMyStoreAndGrabInfo(store);
         results.push({
           storeInfo,
-          results: await this.getInventoryForStore(store)
+          results: await this.getInventoryForStore(store, expectedWhiskey)
         });
       } catch (error) {
         console.log({ error, message: `Could not find ${expectedWhiskey} on store ${store.id}, skipping...` });
@@ -62,7 +62,7 @@ export default class ABCProductPage extends ABCBasePage {
     };
   }
 
-  async getInventoryForStore(store) {
+  async getInventoryForStore(store, expectedWhiskey) {
     let inventoryCount = 0;
     let phone, price;
     let inventoryExist = await this.existsAsync(this.inventory);
@@ -70,17 +70,17 @@ export default class ABCProductPage extends ABCBasePage {
       try {
         inventoryCount = await this.inventory().textContent;
       } catch (error) {
-        console.log(error);
+        console.log(`Could not find inventory count for ${expectedWhiskey}`);
       }
       try {
         phone = await this.phone().textContent;
       } catch (error) {
-        console.log(error);
+        console.log(`Could not find phone number for store`);
       }
       try {
         price = await this.price().textContent;
       } catch (error) {
-        console.log(error);
+        console.log(`Could not find price for ${expectedWhiskey}`);
       }
     }
     return {
