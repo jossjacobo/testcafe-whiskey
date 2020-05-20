@@ -2,6 +2,8 @@
 # Whisk(e)y Search Bot
 The bot will log in to your Distiller account, navigate to the specified list, and search for the whisk(e)ys on the list in all the provided ABC stores (Virginia only). The bot will print out all the search results organized by store (or post them on slack if the webhook is provided). I have included a [CircleCI](https://circleci.com/gh/jossjacobo/workflows/testcafe-whiskey/tree/master) config as well that uses it's [scheduling workflow feature](https://circleci.com/docs/2.0/workflows/#scheduling-a-workflow) to run the search on a weekly or daily basis.
 
+![Demo GIF](/38083972_1302463563242691_5791098636502827008_n.gif)
+
 ## Required
 - [NodeJS](https://nodejs.org/en/)
 - [Google Chrome](https://www.google.com/chrome/)
